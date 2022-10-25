@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/prism.min.js"
+        integrity="sha512-/Swpp6aCQ0smuZ+zpklJqMClcUlvxhpLf9aAcM7JjJrj2waCU4dikm3biOtMVAflOOeniW9qzaNXNrbOAOWFCw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/themes/prism-coy.min.css"
+        integrity="sha512-LOT5F67SMZVdXMrvQe4S1ZHu5l6xk3CST2qqno9kY329OsJBBpybnq+fM9qG4ZSaNzPOjoGzHAeBamSSJyyuZg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js"></script>
+    <link rel="stylesheet" href="/emoji-picker-twemoji/css/emojis.css" />
+    {{ include('includes.html') }}
+    <title>GameTaste | Edit profile</title>
+</head>
+<style>
+    .downarea {
+        width: 700px;
+    }
+</style>
+
+<body class="bg-color">
+    {{ include('navbar.html') }}
+    <picture class="absolute inset-x-0 top-0 block pointer-events-none -z-10">
+        <img src="/img/gradient_dark.jpg" alt="gradient dark" />
+    </picture>
+    <section class="min-h-screen flex items-stretch text-white pt-15">
+        <!-- Form to edit profile info -->
+        <div class="lg:w-1/2 w-full flex items-start justify-center text-start md:px-16 px-0 z-0">
+            <div class="w-full">
+                <form action="editPost" method="POST" class="sm:w-2/3 px-4 lg:px-0 mx-auto">
+                    <table class="w-full">
+                        <tr>
+                            <td>Username</td>
+                            <td><input class="block w-full p-4 text-white rounded-lg bg-black mt-2 mb-2" type="text"
+                                    name="username" placeholder="{{ username }}" minlength="2" maxlength="16"
+                                    value="{{ username }}"></td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td><input class="block w-full p-4 text-white rounded-lg bg-black mt-2 mb-2" type="text"
+                                    name="email" placeholder="{{ email }}" value="{{ email }}"></td>
+                        </tr>
+                        <tr>
+                            <td>Display name</td>
+                            <td><input class="block w-full p-4 text-white rounded-lg bg-black mt-2 mb-2" type="text"
+                                    name="display_name" placeholder="{{ display_name }}" minlength="2" maxlength="16"
+                                    value="{{ display_name }}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Bio</td>
+                            <td><textarea class="block w-full p-4 text-white rounded-lg bg-black mt-2 mb-2 h-72"
+                                    type="textarea" name="bio" value="{{ bio }}">{{ bio }}</textarea></td>
+                        </tr>
+                        <tr>
+                            <td>Link naar avatar</td>
+                            <td><input class="block w-full p-4 text-white rounded-lg bg-black mt-2 mb-2" type="text"
+                                    name="avatar" id="avatar" minlength="3"
+                                    pattern="(((http://www)|(http://)|(www)|(https://)|(https://www.))[-a-zA-Z0-9@:%_\+.~#?&//=]+)\.(jpg|jpeg|gif|png|bmp|tiff|tga|svg)"
+                                    placeholder="{{ avatar }}" value="{{ avatar }}"></td>
+                        </tr>
+                        <tr>
+                            <td>Twitch username</td>
+                            <td><input class="block w-full p-4 text-white rounded-lg bg-black mt-2 mb-2" type="text"
+                                    name="twitch" placeholder="{{ twitch }}" value="{{ twitch }}"></td>
+                        </tr>
+                        <tr>
+                            <td>Youtube</td>
+                            <td><input class="block w-full p-4 text-white rounded-lg bg-black mt-2 mb-2" type="text"
+                                    name="youtube" placeholder="{{ youtube }}" value="{{ youtube }}"></td>
+                        </tr>
+                        <tr>
+                            <td>Twitter</td>
+                            <td><input class="block w-full p-4 text-white rounded-lg bg-black mt-2 mb-2" type="text"
+                                    name="twitter" placeholder="{{ twitter }}" value="{{ twitter }}"></td>
+                        </tr>
+                        <tr>
+                            <td>Instagram</td>
+                            <td><input class="block w-full p-4 text-white rounded-lg bg-black mt-2 mb-2" type="text"
+                                    name="instagram" placeholder="{{ instagram }}" value="{{ instagram }}"></td>
+                        </tr>
+                        <tr>
+                            <td>Discord</td>
+                            <td><input class="block w-full p-4 text-white rounded-lg bg-black mt-2 mb-2" type="text"
+                                    name="discord" placeholder="{{ discord }}" value="{{ discord }}"></td>
+                        </tr>
+                    </table>
+                    <input type="submit" value="SUBMIT"
+                        class="block w-full mt-5 p-4 text-white rounded-full bg-purple-500 hover:bg-indigo-600 focus:outline-none"
+                        onsubmit="return checkFormInput(this);" />
+                </form>
+            </div>
+        </div>
+
+        <div class="lg:flex flex-col w-1/3 text-center hidden relative items-start mr-20">
+            <!-- Password change status update -->
+            {% if error != null %}
+            {% if error == 5 %}
+            <script>
+                toastr.success('Profile successfully edited');
+            </script>
+            {% endif %}
+            {% if error == 1 %}
+            <script>
+                toastr.error('Current password is invalid');
+            </script>
+            {% endif %}
+            {% if error == 2 %}
+            <script>
+                toastr.error('Passwords do not match');
+            </script>
+            {% endif %}
+            {% if error == 3 %}
+            <script>
+                toastr.error('All field are required for a password change');
+            </script>
+            {% endif %}
+            {% if error == 4 %}
+            <script>
+                toastr.success('Password successfully chenged');
+            </script>
+            {% endif %}
+            {% endif %}
+            <!-- Form to change password -->
+            <form action="changePasswordPost" method="POST" class="w-full">
+                <input type="password" name="currentPassword" placeholder="Current password"
+                    class="block w-full p-4 text-white rounded-lg bg-black mt-2 mb-2">
+                <input type="password" name="newPassword" placeholder="New password"
+                    class="block w-full p-4 text-white rounded-lg bg-black mt-2 mb-2">
+                <input type="password" name="newPasswordRepeat" placeholder="Repeat password"
+                    class="block w-full p-4 text-white rounded-lg bg-black mt-2 mb-2">
+                <input type="submit" value="Change password"
+                    class="block w-full p-4 text-white rounded-full bg-purple-500 hover:bg-indigo-600 focus:outline-none" />
+            </form>
+            <!-- Delete profile -->
+            <form action="profileDelete" onclick="return confirm('Are you sure you want to delete your account?');"
+                class="block w-full mt-20 p-4 text-white rounded-full bg-purple-500 hover:bg-indigo-600 focus:outline-none">
+                <input type="submit" value="Delete profile" />
+            </form>
+        </div>
+    </section>
+    <script src="editProfile.js"></script>
+    {{ include('footer.html') }}
+</body>
+
+</html>

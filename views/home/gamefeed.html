@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/prism.min.js"
+        integrity="sha512-/Swpp6aCQ0smuZ+zpklJqMClcUlvxhpLf9aAcM7JjJrj2waCU4dikm3biOtMVAflOOeniW9qzaNXNrbOAOWFCw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/themes/prism-coy.min.css"
+        integrity="sha512-LOT5F67SMZVdXMrvQe4S1ZHu5l6xk3CST2qqno9kY329OsJBBpybnq+fM9qG4ZSaNzPOjoGzHAeBamSSJyyuZg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500&display=swap" rel="stylesheet">
+    {{ include('includes.html') }}
+    <title>GameTaste | Games</title>
+</head>
+<style>
+    body {
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .bg-color {
+        background-color: #0f102e;
+    }
+
+    img {
+        display: flex;
+    }
+
+    .genreTag {
+        z-index: 9999;
+        max-width: 74px;
+    }
+
+    .inset-center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+</style>
+
+<body class="bg-color">
+    {{ include('navbar.html') }}
+    <picture class="absolute inset-x-0 top-0 block pointer-events-none -z-10">
+        <img src="/img/gradient_dark.jpg" alt="gradient dark" />
+    </picture>
+    <div class="h-screen relative text-center items-center justify-center pl-24">
+        <form action="gameSearch" method="POST" class="text-white">
+            <label>Looking for anything?</label>
+            <div class="flex justify-center">
+                <div class="mb-3 xl:w-96">
+                    <div class="input-group relative flex flex-wrap items-stretch w-full mb-4">
+                        <input type="text" class="block w-full text-center p-4 text-lg rounded-lg bg-black"
+                            placeholder="Search for a game" aria-label="Search" aria-describedby="button-addon2"
+                            name="gameTitle">
+
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="grid grid-cols-8 gap-4 px-12 ">
+            {% for game in games %}
+            <div class="flex flex-col gap-2 w-72 mb-10">
+                <!-- Image -->
+                <a href="../game/view?id={{game.id}}" class="bg-purple-800 rounded-xl">
+                    <img src="https://images.igdb.com/igdb/image/upload/t_1080p/{{game.cover.image_id}}.jpg"
+                        class="hover:translate-x-1 hover:-translate-y-1 delay-50 duration-100 rounded-xl" />
+                </a>
+                <!-- Games Title -->
+                <a href="../game/view?id={{game.id}}" class="hover:text-purple-400 text-gray-200 font-semibold">
+                    {{game.name}} </a>
+                <!-- Category Tags -->
+                <div class="flex flex-row flex-wrap gap-2">
+                    {% for genre in game.genres|slice(0,3) %}
+                    <a
+                        class="hover:bg-gray-600 text-gray-300 text-xs font-semibold bg-gray-700 px-2 py-1 rounded-full genreTag truncate hover:overflow-visible hover:max-w-none cursor-default">
+                        {{genre.name}} </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <br>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    {{ include('includes.html') }}
+
+    <title>GameTaste | Review</title>
+</head>
+<style>
+    body {
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .bg-color {
+        background-color: #0f102e;
+    }
+
+    img {
+        display: flex;
+    }
+
+    #rating {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        color: #FFD700;
+    }
+
+    .reviewText * {
+        font-family: 'Montserrat', sans-serif;
+    }
+</style>
+
+<body class="bg-color">
+    {{ include('navbar.html') }}
+
+    <picture class="absolute inset-x-0 top-0 block pointer-events-none -z-10">
+        <img src="/img/gradient_dark.jpg" alt="gradient dark" />
+    </picture>
+    <section class="min-h-screen flex items-stretch text-white pt-20 pl-20">
+        <!-- Formulier om review te schrijven -->
+        <div
+            class="lg:w-1/2 w-full flex items-start divide-y divide-gray-500  antialiased pt-10  mb-20 mr-5 bg-slate-800 shadow-2xl rounded-lg border border-gray-600 text-center md:px-16 px-0 z-0">
+            <div class="">
+                <!-- This could be w-full. Keep it without for now! -->
+                <table class="text-left pr-2 divide-solid border border-separate rounded-lg border-gray-600">
+                    <tr>
+                        <th class="p-2 pr-5">Review Title</th>
+                        <td class="p-2">
+                            <h1>{{ review.review_title }}</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="p-2">Author</th>
+                        <td class="p-2"><a href="/profile/user?name={{displayname}}" class="text">{{displayname}}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="p-2">Last update</th>
+                        <td class="p-2">
+                            <p>{{ review.updated_at }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="p-2">Rating</th>
+                        <td class="p-2 align-start">
+                            <h2 class="text-3xl" id="rating">{{ review.rating }}</h2>
+                        </td>
+                    </tr>
+                </table>
+                <p id="reviewText" class="pt-10 prose prose-invert text-left">{{ review.review }} </p>
+            </div>
+            {% if isAuthor == true %}
+            <a href="/review/editReview?id={{review.id}}"
+                class="bg-purple-500 rounded-3xl py-2 px-2 font-bold text-white transition duration-300 ease-in-out hover:bg-purple-600 items-end ml-auto">
+                EDIT
+            </a>
+            {% endif %}
+        </div>
+        <!-- Overzicht game waarover gereviewed wordt -->
+        <div class="lg:flex w-1/2 text-center hidden relative items-start pt-5 pr-20">
+            <div class="w-full px-4 pt-5">
+                {% if gameID is not null %}
+                <!-- Header -->
+                <a href="/game/view?id={{ gameID }}">
+                    <h1 class="text-gray-100 text-2xl font-bold mb-7">{{gameName}}</h1>
+                    <img src="{{ gameCover }}" alt="{{ gameName }} Box art"
+                        class="w-2/5 h-auto inline rounded-3xl drop-shadow-md md:drop-shadow-xl mb-2">
+                </a>
+                {% if gameRating %}
+                <h3 class="text-white font-bold">Rating: {{gameRating|round}}/100</h3>
+                <h3 class="text-white font-light mb-5">Based on {{gameRatingCount}} online ratings.</h3>
+                {% endif %}
+                <h3 class="text-white font-semibold">Released: {{gameDate}}</h3>
+                <h3 class="text-white font-semibold mb-5">Genre: {{gameGenre}}</h3>
+                <p class="text-gray-300 text-lg font-medium mb-8">{{gameSummary}}</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    <script>
+        let text = DOMPurify.sanitize(marked.parse(`{{ review.review }}`));
+        let reviewTextArea = document.getElementById('reviewText');
+        reviewTextArea.innerHTML = text;
+    </script>
+    {{ include('footer.html') }}
+</body>
+
+</html>

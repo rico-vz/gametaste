@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{ include('includes.html') }}
+    <title>GameTaste | {{ gameName }}</title>
+</head>
+<style>
+    body {
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .rotate-\[8deg\] {
+        --tw-rotate: 8deg;
+        transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+    }
+
+    .bg-color {
+        background-color: #0f102e;
+    }
+
+    img {
+        display: flex;
+    }
+
+    #rating {
+        width: 1.1em;
+        font-size: 1vw;
+        color: #FFD700;
+    }
+
+    img.emoji {
+        display: inline;
+        height: 1em;
+        width: 1em;
+        margin: 0 .05em 0 .1em;
+        vertical-align: -0.1em;
+    }
+
+    .actions {
+        display: inline-flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: .5rem;
+    }
+
+    .btn-group .button {
+        background-color: #4CAF50;
+        /* Green */
+        border: 1px solid green;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        float: left;
+    }
+
+    .btn-group .button:not(:last-child) {
+        border-right: none;
+        /* Prevent double borders */
+    }
+
+    .btn-group .button:hover {
+        background-color: #3e8e41;
+    }
+</style>
+
+<body class="bg-color">
+    {{ include('navbar.html') }}
+    <picture class="absolute inset-x-0 top-0 pointer-events-none -z-10 ">
+        <img src="localhost/img/gradient_dark.jpg" alt="gradient dark" />
+    </picture>
+    <div class="relative grid place-items-center h-screen">
+        <section class="relative pb-10 lg:h-[88vh]">
+            <section class="relative pb-10 lg:h-[88vh] justify-center align-center items-center">
+                <div class="flex flex-col mt-2">
+                    <div class="relative max-w-7xl px-4">
+                        <!-- Section Header -->
+                        <div class="flex flex-wrap justify-center items-center text-center mb-8">
+                            <div class="w-full px-4">
+                                <!-- Header -->
+                                <h1 class="text-gray-100 text-4xl font-bold mb-7">
+                                    {{gameName}}
+                                </h1>
+                                <img src="{{ gameCover }}" alt="{{ gameName }} Box art"
+                                    class="w-1/5 h-auto inline rounded-3xl drop-shadow-md md:drop-shadow-xl mb-2">
+                                {% if gameRating %}
+                                <h3 class="text-white font-bold">🌐 Rating: {{gameRating|round}}/100</h3>
+                                <h3 class="text-white font-light mb-5">Based on {{gameRatingCount}} online ratings.</h3>
+                                {% endif %}
+
+                                {% if gtRating %}
+                                <h3 class="text-white font-bold">🎮 GT Rating</h3>
+                                <h3 class="text-white font-light">{% for star in 1..gtRating %}⭐{% endfor %}</h3>
+                                <h3 class="text-white font-light mb-5">Based on {{gtRatingCount}} reviews.</h3>
+                                {% endif %}
+
+                                <h3 class="text-white font-semibold">Released: {{gameDate}}</h3>
+                                <h3 class="text-white font-semibold mb-5">Genre: {{gameGenre}}</h3>
+                                <h3 class="text-white font-semibold">📖 Game Summary</h3>
+                                <p class="text-gray-300 text-lg font-medium mb-8">{{gameSummary}}</p>
+
+                                {% if loggedInUser %}
+                                <form action="../review/createReview" method="post">
+                                    <button
+                                        class="text-white bg-purple-500 px-2 py-2 rounded-lg drop-shadow-lg antialiased font-bold"
+                                        name="title" value="{{gameName}}">Create a review for this game</button>
+                                    <input type="hidden" name="game_id" value="{{ gameID }}">
+                                </form>
+                                {% else %}
+                                <a href="/user/login?returnTo=/game/view?id={{gameID}}"
+                                    class="text-white bg-purple-500 px-2 py-2 rounded-lg drop-shadow-lg antialiased font-bold">Create
+                                    a review for this game</a>
+                                {% endif %}
+
+
+                            </div>
+                            {% if reviews is not null %}
+                            <h3 class="text-center self-center content-center font-semibold text-white text-2xl mt-20">
+                                Reviews</h3>
+                            {% endif %}
+                        </div>
+                        <section class="antialiased ">
+
+                            <!-- Only show reviews section if there are any! -->
+                            {% if reviews is not null %}
+                            <div class="flex flex-col mx-0 h-full mb-10">
+                                <!-- Table -->
+                                <div class="w-full bg-slate-800 shadow-lg border border-gray-600 rounded-lg">
+
+                                    <div class="p-3">
+                                        <div class="overflow-x-auto">
+                                            <table class="table-auto w-full mb-5 rounded-lg overflow-hidden">
+                                                <thead class="text-xs font-semibold uppercase text-white bg-gray-900">
+                                                    <tr>
+                                                        <th class="p-2 whitespace-nowrap">
+                                                            <div class="font-semibold text-left">Game</div>
+                                                        </th>
+                                                        <th class="p-2 whitespace-nowrap">
+                                                            <div class="font-semibold text-left">Title</div>
+                                                        </th>
+                                                        <th class="p-2 whitespace-nowrap">
+                                                            <div class="font-semibold text-left">Rating</div>
+                                                        </th>
+
+                                                        <th class="p-2 whitespace-nowrap">
+                                                            <div class="font-semibold text-left">Date</div>
+                                                        </th>
+                                                        <th class="p-2 whitespace-nowrap">
+                                                            <div class="font-semibold text-left">Written by</div>
+                                                        </th>
+                                                        <th class="p-2 whitespace-nowrap">
+                                                            <div class="font-semibold text-left">Actions</div>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="text-sm divide-y divide-gray-500 text-gray-200">
+                                                    {% for review in reviews|reverse%}
+                                                    <tr>
+                                                        <td class="p-2 whitespace-nowrap">
+                                                            <div class="text-left text-gray-200">{{
+                                                                review.game_title }}</div>
+                                                        </td>
+
+                                                        <td class="p-2 whitespace-nowrap">
+                                                            <div class="text-left">{{ review.review_title
+                                                                }}</div>
+                                                        </td>
+                                                        <td class="p-2 whitespace-nowrap">
+                                                            <div id="rating" class="font-semibold text-left">{{
+                                                                review.rating }}
+                                                            </div>
+                                                        </td>
+                                                        <td class="p-2 whitespace-nowrap">
+                                                            <div class="text-left">{{ review.updated_at }}
+                                                            </div>
+                                                        </td>
+                                                        <td class="p-2 whitespace-nowrap">
+                                                            <div class="text-left">{{ review.username }}
+                                                            </div>
+                                                        </td>
+                                                        <td class="actions">
+                                                            <a href="/review/show?id={{review.id}}"
+                                                                class="bg-purple-500 rounded-3xl py-2 px-2 font-bold text-white transition duration-300 ease-in-out hover:bg-purple-600">
+                                                                VIEW
+                                                            </a>
+                                                            {% if user == review.username %}
+                                                            <a href="/review/editReview?id={{review.id}}"
+                                                                class="bg-purple-500 rounded-3xl py-2 px-2 font-bold text-white transition duration-300 ease-in-out hover:bg-purple-600">
+                                                                EDIT
+                                                            </a>
+                                                            <a href="/review/delete?id={{review.id}}"
+                                                                class="bg-purple-500 rounded-3xl py-2 px-2 font-bold text-white transition duration-300 ease-in-out hover:bg-purple-600">
+                                                                DELETE
+                                                            </a>
+                                                        </td>
+                                                        {% endif %}
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+            <script>
+                twemoji.parse(document.body);
+            </script>
+</body>
+
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/prism.min.js"
+        integrity="sha512-/Swpp6aCQ0smuZ+zpklJqMClcUlvxhpLf9aAcM7JjJrj2waCU4dikm3biOtMVAflOOeniW9qzaNXNrbOAOWFCw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.27.0/themes/prism-coy.min.css"
+        integrity="sha512-LOT5F67SMZVdXMrvQe4S1ZHu5l6xk3CST2qqno9kY329OsJBBpybnq+fM9qG4ZSaNzPOjoGzHAeBamSSJyyuZg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500&display=swap" rel="stylesheet">
+    {{ include('includes.html') }}
+    <title>GameTaste | Login</title>
+</head>
+<style>
+    body {
+        font-family: 'Zen Maru Gothic', sans-serif;
+    }
+</style>
+
+<body>
+    {% if error != null %}
+    {% if error == 'password' %}
+    <script>
+        toastr.error('Incorrect password');
+    </script>
+    {% endif %}
+    {% if error == 'user' %}
+    <script>
+        toastr.error('Incorrect username');
+    </script>
+    {% endif %}
+    {% endif %}
+    <section class="min-h-screen flex items-stretch text-white ">
+        <div class="lg:flex w-1/2 hidden bg-gray-500 bg-no-repeat bg-cover relative items-center"
+            style="background-image: url(https://i.ibb.co/FsQYQ7m/4321.png);">
+            <div class="absolute bg-black opacity-30 inset-0 z-0"></div>
+            <div class="w-full px-24 z-10">
+                <h1 class="text-5xl font-bold text-left tracking-wide"></h1>
+                <img src="https://i.postimg.cc/3Nq6JRNR/gametaste-white.png" alt="GameTaste" class="w-1/2">
+                <p class="text-4xl my-4">The platform for gamers to share their favorite games & leave reviews.</p>
+            </div>
+
+        </div>
+        <div class="lg:w-1/2 w-full flex items-center justify-center text-center md:px-16 px-0 z-0"
+            style="background-color: #161616;">
+            <div class="absolute lg:hidden z-10 inset-0 bg-gray-500 bg-no-repeat bg-cover items-center"
+                style="background-image: url(https://i.ibb.co/FsQYQ7m/4321.png);">
+                <div class="absolute bg-black opacity-60 inset-0 z-0"></div>
+            </div>
+            <div class="w-full py-6 z-20 ">
+                <h1 class="mt-6 flex items-center justify-center text-center">
+                    <a href="/"><img src="https://i.ibb.co/WtPM0J0/321.png"
+                            class="w-16 flex items-center justify-center text-center"></a>
+                </h1>
+                <a href="/"><i class="fa-solid fa-arrow-left-long"></i></a>
+
+                <form action="loginPost" method="POST" class="sm:w-2/3 w-full px-4 lg:px-0 mx-auto">
+                    <div class="pb-2 pt-4">
+                        <input type="text" pattern="([A-z0-9À-ž\s]){2,16}$" required name="uname" id="uname"
+                            placeholder="Username" class="block w-full p-4 text-lg rounded-sm bg-black">
+                    </div>
+                    <div class="pb-2 pt-4">
+                        <input class="block w-full p-4 text-lg rounded-sm bg-black" type="password" name="psw" id="psw"
+                            placeholder="*********">
+                    </div>
+
+                    <div class="px-4 pb-2 pt-4">
+                        <button
+                            class="uppercase block w-full p-4 text-lg rounded-full bg-purple-500 hover:bg-indigo-600 focus:outline-none">SIGN
+                            IN</button>
+                    </div>
+                    <input type="hidden" name="returnTo" value="{{ returnTo }}">
+
+                    <hr class="mb-6 mt-5 border-t" />
+
+                    <div class="text-center">
+                        <a class="inline-block text-sm text-purple-500 align-baseline hover:text-blue-800"
+                            href="./register">
+                            Don't have an account yet? Register!
+                        </a>
+                    </div>
+                    <div class="text-center">
+                        <a class="inline-block text-sm text-purple-500 align-baseline hover:text-blue-800"
+                            href="./forgotPassword">
+                            Forgotten your password?
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+.rotate-\[8deg\] {
+    --tw-rotate: 8deg;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+  
+  @-webkit-keyframes fly {
+    0%, 100% {
+      transform: translateY(5%);
+    }
+  
+    50% {
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fly {
+    0%, 100% {
+      transform: translateY(5%);
+    }
+  
+    50% {
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-fly {
+    -webkit-animation: fly 6s cubic-bezier(0.75, 0.02, 0.31, 0.87) infinite;
+            animation: fly 6s cubic-bezier(0.75, 0.02, 0.31, 0.87) infinite;
+  }
+  

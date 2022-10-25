@@ -1,0 +1,70 @@
+<style>
+  .navbarri {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: sticky;
+    z-index: 999;
+    top: 0;
+    margin-bottom: 30PX;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+
+
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(165, 115, 250) rgb(15, 16, 46);
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgb(15, 16, 46);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(165, 115, 250);
+  border-radius: 20px;
+  border: 3px solid rgb(15, 16, 46);
+}
+::selection {
+  background: #da8fff;
+    color: rgb(56, 56, 56);
+}
+
+::-moz-selection {
+    background: #da8fff;
+    color: rgb(56, 56, 56);
+}
+</style>
+
+<nav class="navbarri font-sans flex flex-col text-center content-center sm:flex-row sm:text-left sm:justify-between px-6 shadow sm:items-baseline w-full">
+
+    <div class="mb-2 sm:mb-0 flex flex-row">
+      <div>
+        <a href="/" class="inline-block mt-3 mb-3">
+          <img src="/img/logo_white.png" class="block max-h-7" alt="GameTaste" />
+        </a>
+        </div>
+    </div>
+  
+    <div class="sm:mb-0 self-center">
+      <a href="/home/feed" class="text-md no-underline text-white hover:text-blue-dark ml-2 px-1">Feed</a>
+
+      <a href="/home/games" class="text-md no-underline text-white hover:text-blue-dark ml-2 px-1">Games</a>
+
+      {% if loggedInUser is not null %}
+      <a href="/review/gamePicker" class="text-md no-underline text-white hover:text-blue-dark ml-2 px-1">Write a review</a>
+      <a href="/profile/me" class="text-md no-underline text-white hover:text-blue-dark ml-2 px-1">Profile</a>
+      <a href="/user/logout" class="text-md no-underline text-white hover:text-blue-dark ml-2 px-1">Logout</a>
+      {% else %}
+      <a href="/user/login" class="text-md no-underline text-white hover:text-blue-dark ml-2 px-1">Login</a>
+      <a href="/user/register" class="text-md no-underline text-white hover:text-blue-dark ml-2 px-1">Register</a>
+      {% endif %}
+
+
+    </div>
+  </nav>
