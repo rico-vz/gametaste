@@ -7,7 +7,7 @@ GameTaste is a user-friendly game review project built using a custom framework,
 
 - [Dylan]()
 - [Danyla]()
-- [@RiankaSpek](https://github.com/riankaSpek)
+- [@RiankaSpek](https://github.com/RiankaSpek)
 - [@rico-vz](https://github.com/rico-vz)
 
 ## Features
