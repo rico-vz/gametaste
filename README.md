@@ -21,7 +21,7 @@ GameTaste is a user-friendly game review project built using a custom framework,
 
 ## Installation
 
-Install gametaste
+Install GameTaste
 
 ```bash
   todo
