@@ -21,11 +21,28 @@ GameTaste is a user-friendly game review project built using a custom framework,
 
 ## Installation
 
-Install GameTaste
+Start by cloning this repository (Hello! 👋)
+\
+Use the dependency manager [Composer](https://getcomposer.org/) for PHP to install GameTaste.
+
+Navigate to the folder where you cloned the GameTaste sourcecode and run:
 
 ```bash
-  todo
+composer update
 ```
+
+## Usage
+
+Use the web server stack of your choice and start PHP & MySQL.
+\
+Import the database from import.sql using PHPMYADMIN.
+
+Now edit the Database credentials in ./public/index.php to the correct ones for your database
+
+Done? You can now visit GameTaste on your localhost! 
+\
+Enjoy. 🥳
+
 
 ## Screenshots
 
