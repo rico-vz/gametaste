@@ -50,7 +50,7 @@ Enjoy. 🥳
 
 ## Demo
 
-To-do.
+https://gametaste.by-a.dev/
 
 ## Contributing
 
