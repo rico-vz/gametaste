@@ -1,15 +1,17 @@
 
 # GameTaste 🎮
 
-GameTaste is a user-friendly game review project built using a custom framework, IGDB API & TailwindCSS.
+GameTaste is a cutting-edge game review project that offers users an intuitive and user-friendly platform to share their opinions on their favorite games. Developed using a custom framework, this project leverages the power of IGDB API and TailwindCSS to provide an unparalleled experience to gamers around the world.
 
+One of the standout features of GameTaste is its dark mode, which makes it easy on the eyes for users who prefer a more subdued color palette. Additionally, GameTaste provides users with the ability to create their own profile, complete with a bio and profile picture. This personalized touch allows users to showcase their gaming interests and connect with like-minded individuals.
+
+Another great feature of GameTaste is the ability to review any game. Whether it's an old classic or a brand new release, users can share their thoughts and experiences with the gaming community. To make their reviews stand out, users can use markdown to style their content and add flair to their writing.
 ## Authors
 
-- [@Dylan-Kuiper](https://github.com/Dylan-Kuiper)
 - [@danylayasmin](https://github.com/danylayasmin)
 - [@RiankaSpek](https://github.com/RiankaSpek)
 - [@rico-vz](https://github.com/rico-vz)
-
+- [@Dylan-Kuiper](https://github.com/Dylan-Kuiper)
 ## Features
 
 - Dark mode
@@ -18,42 +20,49 @@ GameTaste is a user-friendly game review project built using a custom framework,
 - Use markdown to style your reviews
 - Home page; currently trending games
 - Review feed
-
 ## Installation
 
-Start by cloning this repository (Hello! 👋)
-\
-Use the dependency manager [Composer](https://getcomposer.org/) for PHP to install GameTaste.
+#### Requirements:
+- PHP 7.4+
+- MySQL
+- Nginx/Apache
+- Git
+- IGDB API Key
 
-Navigate to the folder where you cloned the GameTaste sourcecode and run:
+Start by cloning this repository:
+```bash 
+git clone git@github.com:rico-vz/gametaste.git
+```
 
-```bash
+Navigate into the directory:
+```bash 
+cd gametaste-main
+```
+
+Update/Install all Composer dependencies:
+```bash 
 composer update
 ```
 
-## Usage
+Configure your Nginx or Apache to serve from ./public.
 
-Use the web server stack of your choice and start PHP & MySQL.
-\
-Import the database from import.sql using PHPMYADMIN.
+In the case of using Nginx, apply the following rewrite rule:
+```conf
+location / {
+  if (!-e $request_filename){
+    rewrite ^/(.*)$ /index.php?controller=$1 last;
+  }
+}
+```
 
-Now edit the Database credentials in ./public/index.php to the correct ones for your database
-
-Done? You can now visit GameTaste on your localhost! 
-\
-Enjoy. 🥳
-
-
-## Screenshots
-
-![App Screenshot](https://via.placeholder.com/468x300?text=Todo.)
-
+And finally change the IGDB API & Database credentials to yours.
 ## Demo
 
-https://gametaste.by-a.dev/
+You can try out a fully functional GameTaste here: https://gametaste.by-a.dev/
+## Screenshots
 
-## Contributing
+![GameTaste Homepage](https://i.imgur.com/1r7uUVg.png)
+![GameTaste Homepage](https://i.imgur.com/fGP80zs.png)
+![GameTaste Review Page](https://i.imgur.com/n5XxIj2.png)
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-Please make sure to update tests as appropriate.
